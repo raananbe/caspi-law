@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>יאיר כספי, עו״ד | משרד עורכי דין</title>
+  <meta name="description" content="משרד עורכי דין יאיר כספי — ייצוג משפטי מקצועי, אישי ומסור. נדל״ן, דיני משפחה, דיני חברות וליטיגציה." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    :root {
+      --accent: #c9a96e;
+      --accent-rgb: 201,169,110;
+      --dark: #111111;
+      --light: #faf8f5;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; direction: rtl; }
+    body { font-family: 'Inter', sans-serif; background: #111; color: #fff; overflow-x: hidden; }
+    h1, h2, h3, .font-frank { font-family: 'Frank Ruhl Libre', serif; }
+
+    /* Accent color utility */
+    .text-accent { color: var(--accent); }
+    .bg-accent { background-color: var(--accent); }
+    .border-accent { border-color: var(--accent); }
+
+    /* Scroll animations */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* Navbar */
+    #navbar { transition: background 0.3s ease, border-color 0.3s ease; }
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; right:0; width:0; height:1px; background:var(--accent); transition: width 0.3s ease; }
+    .nav-link:hover::after { width:100%; }
+
+    /* Hero SVG pulse */
+    @keyframes svgPulse { 0%,100%{opacity:0.7} 50%{opacity:1} }
+    #hero-svg { animation: svgPulse 4s ease-in-out infinite; }
+
+    /* Card hover */
+    .card-hover { transition: transform 0.3s ease, border-color 0.3s ease; }
+    .card-hover:hover { transform: scale(1.02); }
+
+    /* Toggle switch */
+    .toggle-switch { position:relative; width:44px; height:24px; cursor:pointer; }
+    .toggle-switch input { opacity:0; width:0; height:0; }
+    .toggle-slider { position:absolute; inset:0; background:#444; border-radius:24px; transition:0.3s; }
+    .toggle-slider::before { content:''; position:absolute; width:18px; height:18px; right:3px; bottom:3px; background:#fff; border-radius:50%; transition:0.3s; }
+    .toggle-switch input:checked + .toggle-slider { background:var(--accent); }
+    .toggle-switch input:checked + .toggle-slider::before { transform:translateX(-20px); }
+
+    /* Admin editable */
+    [data-editable].edit-mode { outline: 2px dashed rgba(201,169,110,0.5); cursor: text; border-radius: 4px; min-width: 20px; display: inline-block; }
+    [data-editable].edit-mode:focus { outline: 2px solid var(--accent); box-shadow: 0 0 0 2px rgba(201,169,110,0.3); }
+    [data-editable].edit-mode:hover::before { content:'לחץ לעריכה'; position:absolute; top:-24px; right:0; background:#1a1a1a; color:#c9a96e; font-size:11px; padding:2px 6px; border-radius:4px; white-space:nowrap; pointer-events:none; font-family:'Inter',sans-serif; z-index:100; }
+    [data-editable].edit-mode { position: relative; }
+
+    /* Admin toolbar panel */
+    #admin-panel { transition: max-height 0.3s ease, opacity 0.3s ease; max-height: 0; overflow: hidden; opacity: 0; }
+    #admin-panel.open { max-height: 600px; opacity: 1; }
+
+    /* Modal */
+    .modal-overlay { backdrop-filter: blur(8px); }
+
+    /* 3-line clamp */
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* Drag handle */
+    .drag-item { cursor: grab; }
+    .drag-item:active { cursor: grabbing; }
+    .drag-item.drag-over { border-top: 2px solid var(--accent); }
+
+    /* Toast */
+    #toast { transition: opacity 0.3s ease, transform 0.3s ease; }
+
+    /* Pulsing dot */
+    @keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+    .pulse-dot { animation: dotPulse 2s ease-in-out infinite; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+    /* Section transitions */
+    section { transition: opacity 0.3s ease; }
+
+    /* Mobile menu */
+    #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    #mobile-menu.open { max-height: 400px; }
+
+    /* Profile image */
+    #profile-img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* WhatsApp / Phone float */
+    .float-btn { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .float-btn:hover { transform: scale(1.1); }
+  </style>
+</head>
+<body class="text-right">
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 w-full z-50 border-b border-white/5" style="background:rgba(17,17,17,0.9);backdrop-filter:blur(12px);">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+
+    <!-- Right: Logo -->
+    <a href="#" class="font-frank text-[22px] text-white font-semibold whitespace-nowrap" data-editable="true" data-key="nav-logo">Yair Caspi | עו״ד</a>
+
+    <!-- Center: Nav links (desktop) -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#about" class="nav-link text-white text-[14px] font-medium font-inter hover:text-accent transition-colors duration-300">אודות</a>
+      <a href="#practice" class="nav-link text-white text-[14px] font-medium font-inter hover:text-accent transition-colors duration-300">תחומי התמחות</a>
+      <a href="#articles" class="nav-link text-white text-[14px] font-medium font-inter hover:text-accent transition-colors duration-300">מאמרים</a>
+      <a href="#blog" class="nav-link text-white text-[14px] font-medium font-inter hover:text-accent transition-colors duration-300">בלוג</a>
+      <a href="#media" class="nav-link text-white text-[14px] font-medium font-inter hover:text-accent transition-colors duration-300">פרסומים</a>
+      <a href="#contact" class="nav-link text-white text-[14px] font-medium font-inter hover:text-accent transition-colors duration-300">צור קשר</a>
+    </div>
+
+    <!-- Left: CTA + hamburger -->
+    <div class="flex items-center gap-4">
+      <a href="#contact" class="hidden md:block bg-accent text-[#111] text-[14px] font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:opacity-90">קביעת פגישה</a>
+      <button id="hamburger" class="md:hidden text-white p-1" aria-label="תפריט">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden border-t border-white/10" style="background:rgba(17,17,17,0.97)">
+    <div class="px-6 py-4 flex flex-col gap-4">
+      <a href="#about" class="text-white text-[15px] font-medium py-1 hover:text-accent transition-colors" onclick="closeMobileMenu()">אודות</a>
+      <a href="#practice" class="text-white text-[15px] font-medium py-1 hover:text-accent transition-colors" onclick="closeMobileMenu()">תחומי התמחות</a>
+      <a href="#articles" class="text-white text-[15px] font-medium py-1 hover:text-accent transition-colors" onclick="closeMobileMenu()">מאמרים</a>
+      <a href="#blog" class="text-white text-[15px] font-medium py-1 hover:text-accent transition-colors" onclick="closeMobileMenu()">בלוג</a>
+      <a href="#media" class="text-white text-[15px] font-medium py-1 hover:text-accent transition-colors" onclick="closeMobileMenu()">פרסומים</a>
+      <a href="#contact" class="text-white text-[15px] font-medium py-1 hover:text-accent transition-colors" onclick="closeMobileMenu()">צור קשר</a>
+      <a href="#contact" class="bg-accent text-[#111] text-[14px] font-semibold px-5 py-2 rounded-xl text-center mt-2" onclick="closeMobileMenu()">קביעת פגישה</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section id="hero" data-section="hero" class="min-h-screen flex flex-col justify-center" style="background:#111; padding-top:64px;">
+  <div class="max-w-7xl mx-auto px-6 py-24 w-full">
+    <div class="flex flex-col-reverse md:flex-row items-center gap-12">
+
+      <!-- Right col: text (55%) -->
+      <div class="w-full md:w-[55%] fade-up">
+        <p class="text-accent text-[12px] font-medium uppercase tracking-[0.1em] mb-4" data-editable="true" data-key="hero-label">משרד עורכי דין</p>
+        <h1 class="font-frank text-[56px] md:text-[72px] font-bold text-white leading-tight mb-6" data-editable="true" data-key="hero-h1">יאיר כספי, עו״ד</h1>
+        <p class="text-[20px] font-light leading-relaxed mb-10" style="color:#d4d0ca;" data-editable="true" data-key="hero-tagline">ליווי משפטי מקצועי, אישי ומסור — כי כל תיק הוא עולם ומלואו.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#contact" class="bg-accent text-[#111] text-[15px] font-semibold px-8 py-3 rounded-xl transition-all duration-300 hover:opacity-90" data-editable="true" data-key="hero-cta-primary">קביעת פגישת ייעוץ</a>
+          <a href="#about" class="text-white text-[15px] font-medium px-8 py-3 rounded-xl transition-all duration-300 hover:bg-white/10" style="border:1px solid rgba(255,255,255,0.3)">למידע נוסף</a>
+        </div>
+      </div>
+
+      <!-- Left col: SVG (45%) -->
+      <div class="w-full md:w-[45%] flex justify-center fade-up">
+        <svg id="hero-svg" width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#c9a96e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Scales of justice abstract -->
+          <!-- Center post -->
+          <line x1="150" y1="60" x2="150" y2="240" />
+          <!-- Top beam -->
+          <line x1="70" y1="100" x2="230" y2="100" />
+          <!-- Top center circle -->
+          <circle cx="150" cy="60" r="6" />
+          <!-- Chains left -->
+          <line x1="100" y1="100" x2="90" y2="130" />
+          <line x1="90" y1="130" x2="110" y2="130" />
+          <!-- Left pan -->
+          <path d="M70 130 Q90 145 110 130" />
+          <!-- Chains right -->
+          <line x1="200" y1="100" x2="210" y2="130" />
+          <line x1="190" y1="130" x2="210" y2="130" />
+          <!-- Right pan (slightly lower = unbalanced, human) -->
+          <path d="M190 138 Q200 153 220 138" />
+          <!-- Base -->
+          <line x1="120" y1="240" x2="180" y2="240" />
+          <!-- Decorative circles -->
+          <circle cx="90" cy="100" r="3" />
+          <circle cx="200" cy="100" r="3" />
+          <!-- Small stars / dots -->
+          <circle cx="60" cy="80" r="1.5" opacity="0.5" />
+          <circle cx="240" cy="80" r="1.5" opacity="0.5" />
+          <circle cx="150" cy="200" r="1.5" opacity="0.5" />
+          <!-- Outer decorative ring -->
+          <circle cx="150" cy="150" r="120" stroke-dasharray="4 8" opacity="0.2" />
+          <!-- Inner ring -->
+          <circle cx="150" cy="150" r="90" opacity="0.1" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <!-- Gold divider -->
+  <div class="w-full" style="border-top:1px solid rgba(201,169,110,0.3);"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════════════════════════ -->
+<section id="about" data-section="about" style="background:#faf8f5;" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-accent text-[12px] font-medium uppercase tracking-[0.1em] mb-10 fade-up" data-editable="true" data-key="about-label">אודות</p>
+    <div class="flex flex-col md:flex-row gap-16">
+
+      <!-- Right: text (60%) -->
+      <div class="w-full md:w-[60%] fade-up">
+        <h2 class="font-frank text-[44px] font-semibold text-[#111] leading-tight mb-8" data-editable="true" data-key="about-h2">יאיר כספי, עו״ד</h2>
+        <p class="text-[16px] text-[#444] leading-[1.8] mb-5" data-editable="true" data-key="about-p1">בוגר הפקולטה למשפטים באוניברסיטת תל אביב בהצטיינות, עם תואר שני במשפט מסחרי. לאחר התמחותו בצוות ליטיגציה מוביל, הקים יאיר כספי את משרדו תוך מיקוד בתחומי הנדל״ן, דיני המשפחה ודיני החברות.</p>
+        <p class="text-[16px] text-[#444] leading-[1.8] mb-5" data-editable="true" data-key="about-p2">הגישה המקצועית של המשרד מבוססת על שילוב בין ידע משפטי מעמיק לבין הקשבה אמיתית ללקוח. כל תיק מקבל ייחס אישי — אנחנו לא מפעילים מחשבון כשמדובר בחייכם ובנכסיכם.</p>
+        <p class="text-[16px] text-[#444] leading-[1.8]" data-editable="true" data-key="about-p3">מה שמייחד את המשרד הוא הנגישות. יאיר כספי עצמו נמצא בכל שלב של התיק — מהפגישה הראשונה ועד לסגירה. ניסיון של שנים, תשוקה לצדק, ותוצאות שמדברות בעד עצמן.</p>
+      </div>
+
+      <!-- Left: photo (40%) -->
+      <div class="w-full md:w-[40%] flex justify-center md:justify-start fade-up">
+        <div id="profile-container" class="relative rounded-2xl overflow-hidden flex items-center justify-center" style="width:320px;height:400px;background:#1a1a1a;border:1px solid rgba(201,169,110,0.4);">
+          <img id="profile-img-el" src="" alt="יאיר כספי עו״ד" class="hidden w-full h-full object-cover" />
+          <div id="profile-placeholder" class="flex flex-col items-center gap-3">
+            <i data-lucide="user" class="w-16 h-16" style="color:#c9a96e;stroke-width:1;"></i>
+            <span class="text-[14px]" style="color:#888;font-family:'Inter',sans-serif;">תמונת פרופיל</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 fade-up">
+      <div class="bg-white rounded-2xl p-8 text-center border border-gray-100">
+        <p class="font-frank text-[48px] font-bold text-accent leading-none mb-2" data-editable="true" data-key="stat-1-num">15+</p>
+        <p class="text-[14px] text-[#666]" data-editable="true" data-key="stat-1-label">שנות ניסיון</p>
+      </div>
+      <div class="bg-white rounded-2xl p-8 text-center border border-gray-100">
+        <p class="font-frank text-[48px] font-bold text-accent leading-none mb-2" data-editable="true" data-key="stat-2-num">500+</p>
+        <p class="text-[14px] text-[#666]" data-editable="true" data-key="stat-2-label">תיקים מוצלחים</p>
+      </div>
+      <div class="bg-white rounded-2xl p-8 text-center border border-gray-100">
+        <p class="font-frank text-[48px] font-bold text-accent leading-none mb-2" data-editable="true" data-key="stat-3-num">6</p>
+        <p class="text-[14px] text-[#666]" data-editable="true" data-key="stat-3-label">תחומי מומחיות</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PRACTICE AREAS
+════════════════════════════════════════════════════════════ -->
+<section id="practice" data-section="practice" style="background:#111;" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-accent text-[12px] font-medium uppercase tracking-[0.1em] mb-4 fade-up" data-editable="true" data-key="practice-label">תחומי התמחות</p>
+    <h2 class="font-frank text-[44px] font-semibold text-white leading-tight mb-16 fade-up" data-editable="true" data-key="practice-h2">מומחיות רחבה, ייצוג אישי</h2>
+
+    <div id="practice-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-up">
+      <!-- Cards rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     WHY US
+════════════════════════════════════════════════════════════ -->
+<section id="whyus" data-section="whyus" style="background:#faf8f5;" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-accent text-[12px] font-medium uppercase tracking-[0.1em] mb-4 fade-up" data-editable="true" data-key="why-label">למה אנחנו</p>
+    <h2 class="font-frank text-[44px] font-semibold text-[#111] leading-tight mb-16 fade-up" data-editable="true" data-key="why-h2">כי אתם ראויים לייצוג הטוב ביותר</h2>
+
+    <div id="whyus-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10 fade-up">
+      <!-- Cards rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ARTICLES
+════════════════════════════════════════════════════════════ -->
+<section id="articles" data-section="articles" style="background:#111;" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-accent text-[12px] font-medium uppercase tracking-[0.1em] mb-4 fade-up" data-editable="true" data-key="articles-label">מאמרים</p>
+    <h2 class="font-frank text-[44px] font-semibold text-white leading-tight mb-3 fade-up" data-editable="true" data-key="articles-h2">מאמרים מקצועיים</h2>
+    <p class="text-[16px] mb-12 fade-up" style="color:#aaa;" data-editable="true" data-key="articles-sub">ידע משפטי שימושי — בשפה פשוטה וברורה</p>
+
+    <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 fade-up">
+      <!-- Rendered by JS -->
+    </div>
+
+    <div class="mt-10 text-center fade-up">
+      <button id="articles-toggle" onclick="toggleArticles()" class="border text-white text-[14px] font-medium px-8 py-3 rounded-xl transition-all duration-300 hover:bg-white/10" style="border-color:rgba(255,255,255,0.3)">לכל המאמרים</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DAILY BLOG
+════════════════════════════════════════════════════════════ -->
+<section id="blog" data-section="blog" style="background:#faf8f5;" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-accent text-[12px] font-medium uppercase tracking-[0.1em] mb-4 fade-up" data-editable="true" data-key="blog-label">בלוג</p>
+    <h2 class="font-frank text-[44px] font-semibold text-[#111] leading-tight mb-3 fade-up" data-editable="true" data-key="blog-h2">מהשולחן שלי</h2>
+    <p class="text-[16px] text-[#666] mb-12 fade-up" data-editable="true" data-key="blog-sub">מחשבות, עדכונים ותובנות מהשטח</p>
+
+    <div class="flex flex-col md:flex-row gap-8 fade-up">
+      <!-- Featured post (65%) -->
+      <div class="w-full md:w-[65%]" id="blog-featured">
+        <!-- Rendered by JS -->
+      </div>
+      <!-- Previous posts list (35%) -->
+      <div class="w-full md:w-[35%]" id="blog-sidebar">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MEDIA
+════════════════════════════════════════════════════════════ -->
+<section id="media" data-section="media" style="background:white;" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-accent text-[12px] font-medium uppercase tracking-[0.1em] mb-4 fade-up" data-editable="true" data-key="media-label">פרסומים</p>
+    <h2 class="font-frank text-[44px] font-semibold text-[#111] leading-tight mb-12 fade-up" data-editable="true" data-key="media-h2">נוכחות תקשורתית</h2>
+
+    <!-- Media logos -->
+    <div class="flex flex-wrap justify-center gap-6 mb-16 fade-up">
+      <div class="flex items-center justify-center rounded-xl" style="width:160px;height:60px;background:#f0eeeb;border:1px solid #e0ddd8;"><span class="text-[13px] font-medium text-[#888]" data-editable="true" data-key="media-logo-1">ידיעות אחרונות</span></div>
+      <div class="flex items-center justify-center rounded-xl" style="width:160px;height:60px;background:#f0eeeb;border:1px solid #e0ddd8;"><span class="text-[13px] font-medium text-[#888]" data-editable="true" data-key="media-logo-2">הארץ</span></div>
+      <div class="flex items-center justify-center rounded-xl" style="width:160px;height:60px;background:#f0eeeb;border:1px solid #e0ddd8;"><span class="text-[13px] font-medium text-[#888]" data-editable="true" data-key="media-logo-3">כלכליסט</span></div>
+      <div class="flex items-center justify-center rounded-xl" style="width:160px;height:60px;background:#f0eeeb;border:1px solid #e0ddd8;"><span class="text-[13px] font-medium text-[#888]" data-editable="true" data-key="media-logo-4">גלובס</span></div>
+      <div class="flex items-center justify-center rounded-xl" style="width:160px;height:60px;background:#f0eeeb;border:1px solid #e0ddd8;"><span class="text-[13px] font-medium text-[#888]" data-editable="true" data-key="media-logo-5">מעריב</span></div>
+    </div>
+
+    <!-- Quote cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 fade-up">
+      <div class="rounded-xl p-6" style="background:#faf8f5;border-right:4px solid #c9a96e;">
+        <p class="text-[16px] text-[#444] leading-[1.8] mb-4 italic" data-editable="true" data-key="media-quote-1">"עורך הדין יאיר כספי מייצג גישה חדשה לעולם המשפטי — שילוב בין מקצועיות בלתי מתפשרת לבין נגישות אמיתית ללקוח."</p>
+        <p class="text-[13px] font-semibold text-[#111]" data-editable="true" data-key="media-source-1">ידיעות אחרונות</p>
+        <p class="text-[12px] text-[#888] mt-1" data-editable="true" data-key="media-date-1">מרץ 2024</p>
+      </div>
+      <div class="rounded-xl p-6" style="background:#faf8f5;border-right:4px solid #c9a96e;">
+        <p class="text-[16px] text-[#444] leading-[1.8] mb-4 italic" data-editable="true" data-key="media-quote-2">"בעידן שבו הידע המשפטי הופך מורכב יותר, הכספי בולט ביכולתו לתרגם את המורכבות לשפה ברורה ומועילה עבור הלקוח."</p>
+        <p class="text-[13px] font-semibold text-[#111]" data-editable="true" data-key="media-source-2">כלכליסט</p>
+        <p class="text-[12px] text-[#888] mt-1" data-editable="true" data-key="media-date-2">ינואר 2024</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════════════════════════ -->
+<section id="contact" data-section="contact" style="background:#111;" class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-accent text-[12px] font-medium uppercase tracking-[0.1em] mb-4 fade-up" data-editable="true" data-key="contact-label">צור קשר</p>
+    <h2 class="font-frank text-[44px] font-semibold text-white leading-tight mb-12 fade-up" data-editable="true" data-key="contact-h2">נשמח לשמוע מכם</h2>
+
+    <div class="flex flex-col md:flex-row gap-16 fade-up">
+      <!-- Form (55%) -->
+      <div class="w-full md:w-[55%]">
+        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="flex flex-col gap-4">
+          <input type="text" placeholder="שם מלא" required class="w-full px-4 py-3 rounded-xl text-white text-[15px] border border-white/10 focus:outline-none focus:border-accent transition-colors" style="background:#1a1a1a;direction:rtl;" />
+          <input type="tel" placeholder="טלפון" class="w-full px-4 py-3 rounded-xl text-white text-[15px] border border-white/10 focus:outline-none focus:border-accent transition-colors" style="background:#1a1a1a;direction:rtl;" />
+          <input type="email" placeholder="אימייל" required class="w-full px-4 py-3 rounded-xl text-white text-[15px] border border-white/10 focus:outline-none focus:border-accent transition-colors" style="background:#1a1a1a;direction:rtl;" />
+          <input type="text" placeholder="נושא הפנייה" class="w-full px-4 py-3 rounded-xl text-white text-[15px] border border-white/10 focus:outline-none focus:border-accent transition-colors" style="background:#1a1a1a;direction:rtl;" />
+          <textarea rows="5" placeholder="הודעה" class="w-full px-4 py-3 rounded-xl text-white text-[15px] border border-white/10 focus:outline-none focus:border-accent transition-colors resize-none" style="background:#1a1a1a;direction:rtl;"></textarea>
+          <button type="submit" class="w-full bg-accent text-[#111] text-[15px] font-semibold py-3 rounded-xl transition-all duration-300 hover:opacity-90" data-editable="true" data-key="contact-submit">שליחת הפנייה</button>
+        </form>
+      </div>
+
+      <!-- Details (45%) -->
+      <div class="w-full md:w-[45%] flex flex-col gap-8">
+        <div class="flex items-start gap-4">
+          <i data-lucide="map-pin" class="w-5 h-5 mt-1 flex-shrink-0" style="color:#c9a96e;stroke-width:1.5;"></i>
+          <div>
+            <p class="text-white text-[15px] font-medium mb-1">כתובת המשרד</p>
+            <p class="text-[15px] leading-[1.8]" style="color:#aaa;" data-editable="true" data-key="contact-address">רחוב [PLACEHOLDER], תל אביב</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <i data-lucide="phone" class="w-5 h-5 mt-1 flex-shrink-0" style="color:#c9a96e;stroke-width:1.5;"></i>
+          <div>
+            <p class="text-white text-[15px] font-medium mb-1">טלפון</p>
+            <p class="text-[15px]" style="color:#aaa;" data-editable="true" data-key="contact-phone">0X-XXX-XXXX</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <i data-lucide="mail" class="w-5 h-5 mt-1 flex-shrink-0" style="color:#c9a96e;stroke-width:1.5;"></i>
+          <div>
+            <p class="text-white text-[15px] font-medium mb-1">אימייל</p>
+            <p class="text-[15px]" style="color:#aaa;" data-editable="true" data-key="contact-email">info@caspi-law.co.il</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <i data-lucide="clock" class="w-5 h-5 mt-1 flex-shrink-0" style="color:#c9a96e;stroke-width:1.5;"></i>
+          <div>
+            <p class="text-white text-[15px] font-medium mb-1">שעות פעילות</p>
+            <p class="text-[15px] leading-[1.8]" style="color:#aaa;" data-editable="true" data-key="contact-hours">ראשון–חמישי: 09:00–18:00<br/>שישי: 09:00–13:00</p>
+          </div>
+        </div>
+        <a href="https://wa.me/972XXXXXXXXX" target="_blank" class="flex items-center justify-center gap-3 py-3 rounded-xl text-white font-semibold text-[15px] transition-all duration-300 hover:opacity-90" style="background:#25D366;">
+          <i data-lucide="message-circle" class="w-5 h-5" style="stroke-width:1.5;"></i>
+          <span>שלח הודעת WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer id="footer" style="background:#0a0a0a;" class="py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-8 pb-8 border-b border-white/5">
+      <!-- Right: brand -->
+      <div>
+        <p class="font-frank text-[20px] text-white font-semibold mb-2" data-editable="true" data-key="footer-logo">Yair Caspi | עו״ד</p>
+        <p class="text-[14px]" style="color:#555;" data-editable="true" data-key="footer-tagline">משרד עורכי דין — מקצועיות, אמינות, תוצאות.</p>
+      </div>
+      <!-- Center: links -->
+      <div class="flex flex-wrap gap-6 md:gap-8">
+        <a href="#about" class="text-[13px] hover:text-accent transition-colors" style="color:#555;">אודות</a>
+        <a href="#practice" class="text-[13px] hover:text-accent transition-colors" style="color:#555;">תחומי התמחות</a>
+        <a href="#articles" class="text-[13px] hover:text-accent transition-colors" style="color:#555;">מאמרים</a>
+        <a href="#blog" class="text-[13px] hover:text-accent transition-colors" style="color:#555;">בלוג</a>
+        <a href="#media" class="text-[13px] hover:text-accent transition-colors" style="color:#555;">פרסומים</a>
+        <a href="#contact" class="text-[13px] hover:text-accent transition-colors" style="color:#555;">צור קשר</a>
+      </div>
+      <!-- Left: social -->
+      <div class="flex gap-4">
+        <a href="#" aria-label="LinkedIn" class="flex items-center justify-center w-9 h-9 rounded-xl border border-white/10 hover:border-accent transition-colors">
+          <i data-lucide="linkedin" class="w-4 h-4" style="color:#888;stroke-width:1.5;"></i>
+        </a>
+        <a href="#" aria-label="Facebook" class="flex items-center justify-center w-9 h-9 rounded-xl border border-white/10 hover:border-accent transition-colors">
+          <i data-lucide="facebook" class="w-4 h-4" style="color:#888;stroke-width:1.5;"></i>
+        </a>
+      </div>
+    </div>
+    <!-- Bottom bar -->
+    <div class="pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+      <p class="text-[13px]" style="color:#333;" data-editable="true" data-key="footer-copy">© 2025 Yair Caspi, עו״ד — כל הזכויות שמורות</p>
+      <div class="flex gap-6 items-center">
+        <a href="#" class="text-[13px] hover:text-accent transition-colors" style="color:#333;">מדיניות פרטיות</a>
+        <!-- Hidden admin link -->
+        <a href="#" onclick="openAdminModal(event)" class="text-[11px] transition-colors" style="color:#222;" id="admin-link">כניסת מנהל</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FLOATING BUTTONS
+════════════════════════════════════════════════════════════ -->
+<div class="fixed bottom-6 right-6 flex flex-col gap-4 z-40">
+  <a href="tel:+972XXXXXXXXX" aria-label="חייג" class="float-btn flex items-center justify-center w-14 h-14 rounded-full shadow-lg" style="background:#c9a96e;">
+    <i data-lucide="phone" class="w-6 h-6 text-[#111]" style="stroke-width:2;"></i>
+  </a>
+  <a href="https://wa.me/972XXXXXXXXX" target="_blank" aria-label="WhatsApp" class="float-btn flex items-center justify-center w-14 h-14 rounded-full shadow-lg" style="background:#25D366;">
+    <i data-lucide="message-circle" class="w-6 h-6 text-white" style="stroke-width:2;"></i>
+  </a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ADMIN LOGIN MODAL
+════════════════════════════════════════════════════════════ -->
+<div id="admin-modal" class="hidden fixed inset-0 z-[9998] flex items-center justify-center modal-overlay" style="background:rgba(0,0,0,0.7);">
+  <div class="rounded-2xl p-8 w-full max-w-sm mx-4" style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);">
+    <!-- Step 1: Password -->
+    <div id="admin-step-1">
+      <h3 class="font-frank text-[22px] text-white font-semibold mb-2">כניסת מנהל</h3>
+      <p class="text-[13px] mb-6" style="color:#888;">הכנס את הסיסמה כדי להמשיך</p>
+      <input id="admin-password" type="password" placeholder="סיסמה" class="w-full px-4 py-3 rounded-xl text-white text-[15px] border border-white/10 focus:outline-none focus:border-accent transition-colors mb-3" style="background:#111;direction:rtl;" onkeydown="if(event.key==='Enter')checkAdminPassword()" />
+      <p id="admin-pw-error" class="text-[13px] mb-3 hidden" style="color:#ef4444;">סיסמה שגויה</p>
+      <button onclick="checkAdminPassword()" class="w-full bg-accent text-[#111] text-[15px] font-semibold py-3 rounded-xl transition-all hover:opacity-90 mb-3">כניסה</button>
+      <button onclick="closeAdminModal()" class="w-full text-[14px] py-2" style="color:#555;">ביטול</button>
+    </div>
+    <!-- Step 2: Netlify token -->
+    <div id="admin-step-2" class="hidden">
+      <h3 class="font-frank text-[22px] text-white font-semibold mb-2">חיבור לאתר</h3>
+      <p class="text-[13px] mb-6" style="color:#888;">הכנס את ה-Personal Access Token שלך מ-Netlify</p>
+      <input id="netlify-token-input" type="password" placeholder="nfp_..." class="w-full px-4 py-3 rounded-xl text-white text-[15px] border border-white/10 focus:outline-none focus:border-accent transition-colors mb-3" style="background:#111;direction:ltr;text-align:left;" onkeydown="if(event.key==='Enter')checkNetlifyToken()" />
+      <p id="token-error" class="text-[13px] mb-3 hidden" style="color:#ef4444;">טוקן לא תקין, נסה שנית</p>
+      <button onclick="checkNetlifyToken()" class="w-full bg-accent text-[#111] text-[15px] font-semibold py-3 rounded-xl transition-all hover:opacity-90 mb-3" id="token-btn">חבר</button>
+      <button onclick="closeAdminModal()" class="w-full text-[14px] py-2" style="color:#555;">ביטול</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ADMIN TOOLBAR
+════════════════════════════════════════════════════════════ -->
+<div id="admin-toolbar" class="hidden fixed top-0 w-full z-[9999] flex flex-col" style="background:#1a1a1a;border-bottom:1px solid rgba(201,169,110,0.4);">
+  <div class="h-[52px] px-6 flex items-center justify-between">
+    <!-- Right: status -->
+    <div class="flex flex-col">
+      <div class="flex items-center gap-2">
+        <span class="pulse-dot w-2 h-2 rounded-full bg-accent flex-shrink-0"></span>
+        <span class="text-[13px] text-accent font-medium">מצב עריכה פעיל</span>
+      </div>
+      <span class="text-[11px]" style="color:#666;">כל שינוי מתפרסם לאוויר תוך 30 שניות</span>
+    </div>
+    <!-- Center: tabs -->
+    <div class="flex items-center gap-1">
+      <button onclick="setAdminTab('texts')" id="tab-texts" class="admin-tab px-3 py-1 rounded-lg text-[12px] transition-all" style="color:#666;">✏️ טקסטים</button>
+      <button onclick="setAdminTab('sections')" id="tab-sections" class="admin-tab px-3 py-1 rounded-lg text-[12px] transition-all" style="color:#666;">👁 סקשנים</button>
+      <button onclick="setAdminTab('order')" id="tab-order" class="admin-tab px-3 py-1 rounded-lg text-[12px] transition-all" style="color:#666;">⬆️ סדר</button>
+      <button onclick="setAdminTab('cards')" id="tab-cards" class="admin-tab px-3 py-1 rounded-lg text-[12px] transition-all" style="color:#666;">🃏 כרטיסים</button>
+      <button onclick="setAdminTab('design')" id="tab-design" class="admin-tab px-3 py-1 rounded-lg text-[12px] transition-all" style="color:#666;">🎨 עיצוב</button>
+    </div>
+    <!-- Left: actions -->
+    <div class="flex items-center gap-3">
+      <button onclick="publishChanges()" id="publish-btn" class="bg-accent text-[#111] rounded-lg px-4 py-1.5 text-[13px] font-semibold flex items-center gap-2 transition-all hover:opacity-90">
+        <span id="publish-label">פרסם שינויים</span>
+        <span id="publish-spinner" class="hidden w-4 h-4 border-2 border-[#111] border-t-transparent rounded-full animate-spin"></span>
+      </button>
+      <button onclick="exitAdmin()" class="rounded-lg px-4 py-1.5 text-[13px] text-white border border-white/20 transition-all hover:bg-white/10">יציאה</button>
+    </div>
+  </div>
+  <!-- Panel area -->
+  <div id="admin-panel" class="">
+    <!-- Sections tab -->
+    <div id="panel-sections" class="hidden p-4" style="background:#161616;border-top:1px solid rgba(255,255,255,0.05);">
+      <div id="sections-toggle-list" class="flex flex-col gap-3 max-w-md"></div>
+      <p class="text-[12px] mt-4" style="color:#666;">סקשנים מוסתרים לא יופיעו למבקרים לאחר פרסום</p>
+    </div>
+    <!-- Order tab -->
+    <div id="panel-order" class="hidden p-4" style="background:#161616;border-top:1px solid rgba(255,255,255,0.05);">
+      <p class="text-[12px] text-white mb-3">גרור את הסקשנים לסדר הרצוי</p>
+      <div id="order-list" class="flex flex-col gap-2 max-w-md"></div>
+    </div>
+    <!-- Cards tab -->
+    <div id="panel-cards" class="hidden p-4" style="background:#161616;border-top:1px solid rgba(255,255,255,0.05);max-height:500px;overflow-y:auto;">
+      <div class="flex gap-2 mb-4">
+        <button onclick="setCardsSubTab('practice')" id="cards-tab-practice" class="cards-subtab px-3 py-1 rounded-lg text-[12px] transition-all">תחומי התמחות</button>
+        <button onclick="setCardsSubTab('whyus')" id="cards-tab-whyus" class="cards-subtab px-3 py-1 rounded-lg text-[12px] transition-all">ערכי ליבה</button>
+        <button onclick="setCardsSubTab('media')" id="cards-tab-media" class="cards-subtab px-3 py-1 rounded-lg text-[12px] transition-all">פרסומים בתקשורת</button>
+      </div>
+      <div id="cards-content"></div>
+    </div>
+    <!-- Design tab -->
+    <div id="panel-design" class="hidden p-4" style="background:#161616;border-top:1px solid rgba(255,255,255,0.05);">
+      <div class="flex flex-col gap-6 max-w-lg">
+        <!-- Accent color -->
+        <div>
+          <p class="text-[13px] text-white font-medium mb-3">צבע אקצנט</p>
+          <div class="flex items-center gap-4">
+            <input type="color" id="accent-picker" value="#c9a96e" oninput="updateAccentColor(this.value)" class="w-10 h-10 rounded-lg cursor-pointer border-0" />
+            <div class="flex gap-2">
+              <button onclick="updateAccentColor('#c9a96e')" class="w-7 h-7 rounded-full border-2 border-white/20" style="background:#c9a96e;" title="זהב"></button>
+              <button onclick="updateAccentColor('#a0a0a0')" class="w-7 h-7 rounded-full border-2 border-white/20" style="background:#a0a0a0;" title="כסף"></button>
+              <button onclick="updateAccentColor('#2c4a7c')" class="w-7 h-7 rounded-full border-2 border-white/20" style="background:#2c4a7c;" title="כחול נייבי"></button>
+              <button onclick="updateAccentColor('#3d6b4f')" class="w-7 h-7 rounded-full border-2 border-white/20" style="background:#3d6b4f;" title="ירוק יער"></button>
+            </div>
+            <button onclick="updateAccentColor('#c9a96e')" class="text-[12px] px-3 py-1 rounded-lg border border-white/20 text-white hover:bg-white/10 transition-all">ברירת מחדל</button>
+          </div>
+        </div>
+        <!-- Profile photo -->
+        <div>
+          <p class="text-[13px] text-white font-medium mb-3">תמונת פרופיל</p>
+          <div class="flex items-center gap-4">
+            <div id="design-profile-preview" class="w-20 h-14 rounded-lg flex items-center justify-center" style="background:#333;border:1px solid rgba(255,255,255,0.1);">
+              <i data-lucide="user" class="w-6 h-6" style="color:#666;stroke-width:1.5;"></i>
+            </div>
+            <div>
+              <button onclick="document.getElementById('profile-upload').click()" class="text-[12px] px-3 py-1 rounded-lg border border-white/20 text-white hover:bg-white/10 transition-all">העלה תמונה</button>
+              <input type="file" id="profile-upload" accept="image/*" class="hidden" onchange="handleProfileUpload(event)" />
+              <p class="text-[11px] mt-1" style="color:#666;">מומלץ עד 500KB</p>
+            </div>
+          </div>
+        </div>
+        <!-- Logo text -->
+        <div>
+          <p class="text-[13px] text-white font-medium mb-2">לוגו טקסט</p>
+          <input type="text" id="logo-text-input" placeholder="Yair Caspi | עו״ד" oninput="updateLogoText(this.value)" class="w-full px-4 py-2 rounded-xl text-white text-[14px] border border-white/10 focus:outline-none focus:border-accent" style="background:#111;direction:rtl;" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ARTICLE MODAL
+════════════════════════════════════════════════════════════ -->
+<div id="article-modal" class="hidden fixed inset-0 z-[9990] flex items-center justify-center modal-overlay" style="background:rgba(0,0,0,0.8);">
+  <div class="w-full max-w-2xl mx-4 rounded-2xl bg-white max-h-[90vh] overflow-y-auto">
+    <div class="p-8">
+      <div class="flex justify-between items-start mb-6">
+        <button onclick="closeArticleModal()" class="text-[#888] hover:text-[#111] transition-colors p-1">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <div class="flex-1 mr-4">
+          <p id="modal-article-category" class="text-[12px] font-medium uppercase tracking-[0.1em] text-accent mb-2"></p>
+          <h3 id="modal-article-title" class="font-frank text-[28px] font-semibold text-[#111] leading-tight"></h3>
+          <p id="modal-article-date" class="text-[13px] text-[#888] mt-2"></p>
+        </div>
+      </div>
+      <div id="modal-article-body" class="text-[16px] text-[#444] leading-[1.8] prose prose-sm max-w-none"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG MODAL -->
+<div id="blog-modal" class="hidden fixed inset-0 z-[9990] flex items-center justify-center modal-overlay" style="background:rgba(0,0,0,0.8);">
+  <div class="w-full max-w-xl mx-4 rounded-2xl max-h-[90vh] overflow-y-auto" style="background:#faf8f5;">
+    <div class="p-8">
+      <div class="flex justify-between items-start mb-6">
+        <button onclick="closeBlogModal()" class="text-[#888] hover:text-[#111] transition-colors p-1">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <div class="flex-1 mr-4">
+          <p id="modal-blog-date" class="text-[12px] font-medium text-accent mb-2"></p>
+          <h3 id="modal-blog-title" class="font-frank text-[26px] font-semibold text-[#111] leading-tight"></h3>
+        </div>
+      </div>
+      <div id="modal-blog-body" class="text-[16px] text-[#444] leading-[1.8]"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="hidden fixed bottom-8 left-1/2 -translate-x-1/2 z-[10000] px-6 py-3 rounded-xl text-[14px] font-medium shadow-xl" style="background:#1a1a1a;color:#fff;border:1px solid rgba(255,255,255,0.1);"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════ -->
+<script>
+// ─────────────────────────────────────
+// CONSTANTS & STATE
+// ─────────────────────────────────────
+const NETLIFY_SITE_ID = 'YOUR_NETLIFY_SITE_ID';
+
+let adminMode = false;
+let currentAdminTab = null;
+let currentCardsSubTab = 'practice';
+let articlesExpanded = false;
+let blogPostsData = [];
+let articlesData = [];
+let profileBase64 = null;
+
+// ─────────────────────────────────────
+// CARD DATA
+// ─────────────────────────────────────
+let practiceCards = [
+  { icon: 'scale', title: 'ליטיגציה ודיני בתי משפט', desc: 'ייצוג מקצועי בבתי משפט שלום, מחוזי ועליון. ניסיון עשיר בתיקים מורכבים.' },
+  { icon: 'home', title: 'נדל״ן ומקרקעין', desc: 'ליווי עסקאות מכר ורכישה, בדיקות נאותות, חוזים והסכמי שיתוף.' },
+  { icon: 'users', title: 'דיני משפחה', desc: 'גירושין, הסכמי ממון, משמורת ילדים, מזונות וירושות.' },
+  { icon: 'briefcase', title: 'דיני חברות ומסחרי', desc: 'הקמת חברות, הסכמי מייסדים, חוזים מסחריים וממשל תאגידי.' },
+  { icon: 'file-text', title: 'חוזים והסכמים', desc: 'ניסוח ובדיקת חוזים מסוגים שונים — עסקיים, אישיים ומסחריים.' },
+  { icon: 'shield', title: 'הגנת הפרט', desc: 'הגנה על זכויות אזרחיות, פרטיות וקניין רוחני.' }
+];
+
+let whyusCards = [
+  { icon: 'award', title: 'מקצועיות ללא פשרות', body: 'ניסיון משפטי של שנים, ידע מעמיק, ועדכניות מתמדת עם חקיקה ופסיקה — כדי שתקבלו את הייצוג הטוב ביותר.' },
+  { icon: 'message-square', title: 'תקשורת ישירה ושקופה', body: 'אנחנו מאמינים שהלקוח צריך להבין את התמונה המלאה. תמיד ניגשים, תמיד מסבירים, תמיד כנים.' },
+  { icon: 'clock', title: 'זמינות ומחויבות', body: 'כל תיק מקבל את מלוא תשומת הלב. יאיר כספי עצמו מלווה כל לקוח — מהפגישה הראשונה ועד לסגירה.' }
+];
+
+// ─────────────────────────────────────
+// INIT
+// ─────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+  renderPracticeCards();
+  renderWhyUsCards();
+  loadBlogPosts();
+  loadArticles();
+  initIntersectionObserver();
+  initNavbarScroll();
+  initHamburger();
+  lucide.createIcons();
+});
+
+// ─────────────────────────────────────
+// RENDER PRACTICE CARDS
+// ─────────────────────────────────────
+function renderPracticeCards() {
+  const grid = document.getElementById('practice-grid');
+  if (!grid) return;
+  grid.innerHTML = practiceCards.map((c, i) => `
+    <div class="card-hover rounded-2xl p-8 border" style="background:#1a1a1a;border-color:rgba(255,255,255,0.08);"
+         onmouseover="this.style.borderColor='rgba(201,169,110,0.6)'"
+         onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <i data-lucide="${c.icon}" class="w-7 h-7 mb-5" style="color:#c9a96e;stroke-width:1.5;"></i>
+      <h3 class="text-white text-[18px] font-semibold mb-3">${c.title}</h3>
+      <p class="text-[14px] leading-[1.7]" style="color:#888;">${c.desc}</p>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+// ─────────────────────────────────────
+// RENDER WHY US CARDS
+// ─────────────────────────────────────
+function renderWhyUsCards() {
+  const grid = document.getElementById('whyus-grid');
+  if (!grid) return;
+  grid.innerHTML = whyusCards.map(c => `
+    <div class="text-center md:text-right fade-up">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5" style="background:rgba(201,169,110,0.1);">
+        <i data-lucide="${c.icon}" class="w-7 h-7" style="color:#c9a96e;stroke-width:1.5;"></i>
+      </div>
+      <h3 class="text-[#111] text-[20px] font-semibold mb-3">${c.title}</h3>
+      <p class="text-[16px] text-[#444] leading-[1.8]">${c.body}</p>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+// ─────────────────────────────────────
+// MARKDOWN FETCH & PARSE
+// ─────────────────────────────────────
+const POST_FILES = [
+  '_posts/2025-01-03-placeholder-3.md',
+  '_posts/2025-01-02-placeholder-2.md',
+  '_posts/2025-01-01-placeholder-1.md'
+];
+const ARTICLE_FILES = [
+  '_articles/2025-01-01-placeholder-article-1.md',
+  '_articles/2025-01-02-placeholder-article-2.md',
+  '_articles/2025-01-03-placeholder-article-3.md'
+];
+
+function parseFrontmatter(text) {
+  const match = text.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!match) return { meta: {}, body: text };
+  const meta = {};
+  match[1].split('\n').forEach(line => {
+    const [k, ...v] = line.split(':');
+    if (k) meta[k.trim()] = v.join(':').trim().replace(/^"|"$/g, '');
+  });
+  return { meta, body: match[2].trim() };
+}
+
+function formatDate(dateStr) {
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric' });
+  } catch { return dateStr; }
+}
+
+function markdownToHtml(md) {
+  return md
+    .replace(/^## (.+)$/gm, '<h2 style="font-family:\'Frank Ruhl Libre\',serif;font-size:22px;font-weight:600;color:#111;margin:1.5em 0 0.5em;">$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3 style="font-size:18px;font-weight:600;color:#111;margin:1.2em 0 0.4em;">$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^- (.+)$/gm, '<li style="margin-bottom:4px;">$1</li>')
+    .replace(/(<li[\s\S]*?<\/li>)/g, '<ul style="padding-right:1.5em;margin:0.5em 0;">$1</ul>')
+    .replace(/\n\n/g, '</p><p style="margin-bottom:1em;">')
+    .replace(/^(.+)$/gm, (m) => m.startsWith('<') ? m : m);
+}
+
+async function loadBlogPosts() {
+  const results = [];
+  for (const file of POST_FILES) {
+    try {
+      const r = await fetch(file);
+      if (!r.ok) continue;
+      const text = await r.text();
+      const { meta, body } = parseFrontmatter(text);
+      if (meta.published === 'false') continue;
+      results.push({ ...meta, body, file });
+    } catch {}
+  }
+  blogPostsData = results;
+  renderBlog();
+}
+
+async function loadArticles() {
+  const results = [];
+  for (const file of ARTICLE_FILES) {
+    try {
+      const r = await fetch(file);
+      if (!r.ok) continue;
+      const text = await r.text();
+      const { meta, body } = parseFrontmatter(text);
+      if (meta.published === 'false') continue;
+      results.push({ ...meta, body, file });
+    } catch {}
+  }
+  articlesData = results;
+  renderArticles();
+}
+
+// ─────────────────────────────────────
+// RENDER BLOG
+// ─────────────────────────────────────
+function renderBlog() {
+  const featured = document.getElementById('blog-featured');
+  const sidebar = document.getElementById('blog-sidebar');
+  if (!featured || !sidebar) return;
+
+  if (blogPostsData.length === 0) {
+    featured.innerHTML = `
+      <div class="bg-white rounded-2xl p-8" style="border-right:4px solid #c9a96e;">
+        <p class="text-[14px] text-[#888]">טרם פורסמו רשומות בבלוג. הוסף רשומות דרך <a href="/admin" class="text-accent underline">לוח הניהול</a>.</p>
+      </div>`;
+    sidebar.innerHTML = '';
+    return;
+  }
+
+  const [first, ...rest] = blogPostsData;
+  featured.innerHTML = `
+    <div class="bg-white rounded-2xl p-8 h-full" style="border-right:4px solid #c9a96e;">
+      <span class="text-[12px] font-medium text-accent uppercase tracking-wide">${formatDate(first.date)}</span>
+      <h2 class="font-frank text-[28px] font-semibold text-[#111] leading-tight mt-3 mb-4">${first.title || ''}</h2>
+      <p class="text-[15px] text-[#444] leading-[1.8] mb-6">${first.excerpt || ''}</p>
+      <button onclick="openBlogModal(0)" class="text-accent text-[14px] font-medium hover:opacity-80 transition-opacity flex items-center gap-1">
+        קרא עוד <span>←</span>
+      </button>
+    </div>`;
+
+  const sidebarItems = rest.slice(0, 5).map((p, i) => `
+    <div class="py-4 cursor-pointer hover:bg-gray-50 transition-colors px-2 rounded-lg" style="border-bottom:1px solid #f0f0f0;" onclick="openBlogModal(${i + 1})">
+      <p class="text-[11px] font-medium text-accent mb-1">${formatDate(p.date)}</p>
+      <p class="text-[15px] font-semibold text-[#111] mb-1 line-clamp-1">${p.title || ''}</p>
+      <p class="text-[13px] text-[#888] line-clamp-1">${p.excerpt || ''}</p>
+    </div>`).join('');
+
+  const hasMore = rest.length > 5;
+  sidebar.innerHTML = `
+    <div class="bg-white rounded-2xl p-4">
+      <p class="text-[14px] font-semibold text-[#111] mb-2 px-2">רשומות קודמות</p>
+      <div id="blog-list-items">${sidebarItems}</div>
+      ${hasMore ? `<button onclick="expandBlogList()" id="blog-expand-btn" class="w-full text-[13px] text-accent mt-3 py-2 hover:opacity-80 transition-opacity">רשומות נוספות ↓</button>` : ''}
+    </div>`;
+}
+
+function expandBlogList() {
+  const container = document.getElementById('blog-list-items');
+  const btn = document.getElementById('blog-expand-btn');
+  const [_, ...rest] = blogPostsData;
+  container.innerHTML = rest.map((p, i) => `
+    <div class="py-4 cursor-pointer hover:bg-gray-50 transition-colors px-2 rounded-lg" style="border-bottom:1px solid #f0f0f0;" onclick="openBlogModal(${i + 1})">
+      <p class="text-[11px] font-medium text-accent mb-1">${formatDate(p.date)}</p>
+      <p class="text-[15px] font-semibold text-[#111] mb-1 line-clamp-1">${p.title || ''}</p>
+      <p class="text-[13px] text-[#888] line-clamp-1">${p.excerpt || ''}</p>
+    </div>`).join('');
+  if (btn) btn.remove();
+}
+
+function openBlogModal(index) {
+  const post = blogPostsData[index];
+  if (!post) return;
+  document.getElementById('modal-blog-date').textContent = formatDate(post.date);
+  document.getElementById('modal-blog-title').textContent = post.title || '';
+  document.getElementById('modal-blog-body').innerHTML = `<p style="margin-bottom:1em;">${markdownToHtml(post.body)}</p>`;
+  document.getElementById('blog-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeBlogModal() {
+  document.getElementById('blog-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+// ─────────────────────────────────────
+// RENDER ARTICLES
+// ─────────────────────────────────────
+function renderArticles(expanded) {
+  const grid = document.getElementById('articles-grid');
+  const btn = document.getElementById('articles-toggle');
+  if (!grid) return;
+  const data = expanded ? articlesData : articlesData.slice(0, 3);
+
+  if (data.length === 0) {
+    grid.innerHTML = `<div class="col-span-3 text-center py-12 text-[#666]">טרם פורסמו מאמרים. הוסף מאמרים דרך <a href="/admin" class="text-accent underline">לוח הניהול</a>.</div>`;
+    if (btn) btn.style.display = 'none';
+    return;
+  }
+
+  grid.innerHTML = data.map((a, i) => `
+    <div class="card-hover rounded-2xl overflow-hidden border" style="background:#1a1a1a;border-color:rgba(255,255,255,0.08);"
+         onmouseover="this.style.borderColor='rgba(201,169,110,0.6)'"
+         onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="height:3px;background:#c9a96e;"></div>
+      <div class="p-6">
+        <p class="text-[12px] font-medium uppercase tracking-wide text-accent mb-3">${a.category || 'כללי'}</p>
+        <h3 class="text-white text-[17px] font-semibold leading-snug mb-3">${a.title || ''}</h3>
+        <p class="text-[13px] mb-4" style="color:#666;">${formatDate(a.date)}</p>
+        <p class="text-[14px] leading-[1.7] line-clamp-3" style="color:#888;">${a.excerpt || ''}</p>
+        <button onclick="openArticleModal(${articlesData.indexOf(a)})" class="mt-5 text-accent text-[13px] font-medium hover:opacity-80 transition-opacity">קרא עוד ←</button>
+      </div>
+    </div>`).join('');
+
+  if (btn) btn.textContent = expanded ? 'הצג פחות' : 'לכל המאמרים';
+}
+
+function toggleArticles() {
+  articlesExpanded = !articlesExpanded;
+  renderArticles(articlesExpanded);
+}
+
+function openArticleModal(index) {
+  const a = articlesData[index];
+  if (!a) return;
+  document.getElementById('modal-article-category').textContent = a.category || '';
+  document.getElementById('modal-article-title').textContent = a.title || '';
+  document.getElementById('modal-article-date').textContent = formatDate(a.date);
+  document.getElementById('modal-article-body').innerHTML = `<p style="margin-bottom:1em;">${markdownToHtml(a.body)}</p>`;
+  document.getElementById('article-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeArticleModal() {
+  document.getElementById('article-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+// ─────────────────────────────────────
+// INTERSECTION OBSERVER
+// ─────────────────────────────────────
+function initIntersectionObserver() {
+  const els = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  els.forEach(el => obs.observe(el));
+}
+
+// ─────────────────────────────────────
+// NAVBAR SCROLL
+// ─────────────────────────────────────
+function initNavbarScroll() {
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (!nav) return;
+    if (window.scrollY > 80) {
+      nav.style.background = 'rgba(17,17,17,0.95)';
+      nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+    } else {
+      nav.style.background = 'rgba(17,17,17,0.9)';
+      nav.style.borderBottomColor = 'rgba(255,255,255,0.05)';
+    }
+  });
+}
+
+// ─────────────────────────────────────
+// HAMBURGER
+// ─────────────────────────────────────
+function initHamburger() {
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('mobile-menu');
+  if (!btn || !menu) return;
+  btn.addEventListener('click', () => menu.classList.toggle('open'));
+}
+function closeMobileMenu() {
+  document.getElementById('mobile-menu')?.classList.remove('open');
+}
+
+// ─────────────────────────────────────
+// CONTACT FORM
+// ─────────────────────────────────────
+function handleContactSubmit(e) {
+  e.preventDefault();
+  showToast('✓ הפנייה נשלחה בהצלחה — נחזור אליכם בהקדם', '#25a244');
+  e.target.reset();
+}
+
+// ─────────────────────────────────────
+// ADMIN MODAL
+// ─────────────────────────────────────
+function openAdminModal(e) {
+  e && e.preventDefault();
+  document.getElementById('admin-step-1').classList.remove('hidden');
+  document.getElementById('admin-step-2').classList.add('hidden');
+  document.getElementById('admin-pw-error').classList.add('hidden');
+  document.getElementById('admin-password').value = '';
+  document.getElementById('admin-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('admin-password').focus(), 100);
+}
+
+function closeAdminModal() {
+  document.getElementById('admin-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function checkAdminPassword() {
+  const pw = document.getElementById('admin-password').value;
+  if (btoa(pw) === btoa('CASPI2025')) {
+    document.getElementById('admin-pw-error').classList.add('hidden');
+    const token = localStorage.getItem('caspi_netlify_token');
+    if (token) {
+      closeAdminModal();
+      enterAdminMode();
+    } else {
+      document.getElementById('admin-step-1').classList.add('hidden');
+      document.getElementById('admin-step-2').classList.remove('hidden');
+      document.getElementById('token-error').classList.add('hidden');
+      setTimeout(() => document.getElementById('netlify-token-input').focus(), 100);
+    }
+  } else {
+    document.getElementById('admin-pw-error').classList.remove('hidden');
+    document.getElementById('admin-password').value = '';
+  }
+}
+
+async function checkNetlifyToken() {
+  const token = document.getElementById('netlify-token-input').value.trim();
+  if (!token) return;
+  const btn = document.getElementById('token-btn');
+  btn.textContent = 'בודק...';
+  btn.disabled = true;
+  try {
+    const r = await fetch(`https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (r.ok) {
+      localStorage.setItem('caspi_netlify_token', token);
+      closeAdminModal();
+      enterAdminMode();
+    } else {
+      document.getElementById('token-error').classList.remove('hidden');
+    }
+  } catch {
+    document.getElementById('token-error').classList.remove('hidden');
+  }
+  btn.textContent = 'חבר';
+  btn.disabled = false;
+}
+
+// ─────────────────────────────────────
+// ADMIN MODE
+// ─────────────────────────────────────
+function enterAdminMode() {
+  adminMode = true;
+  document.body.style.overflow = '';
+  const toolbar = document.getElementById('admin-toolbar');
+  toolbar.classList.remove('hidden');
+  toolbar.style.display = 'flex';
+  document.body.style.paddingTop = '52px';
+  buildSectionsToggleList();
+  buildOrderList();
+  lucide.createIcons();
+  showToast('✓ ברוך הבא למצב עריכה', '#c9a96e');
+}
+
+function exitAdmin() {
+  adminMode = false;
+  document.getElementById('admin-toolbar').classList.add('hidden');
+  document.body.style.paddingTop = '0';
+  disableTextEditing();
+  closeAdminPanel();
+  currentAdminTab = null;
+}
+
+// ─────────────────────────────────────
+// ADMIN TABS
+// ─────────────────────────────────────
+function setAdminTab(tab) {
+  // Toggle off if same tab
+  if (currentAdminTab === tab) {
+    currentAdminTab = null;
+    closeAdminPanel();
+    disableTextEditing();
+    updateTabStyles(null);
+    return;
+  }
+  currentAdminTab = tab;
+  updateTabStyles(tab);
+  disableTextEditing();
+  closeAdminPanel();
+
+  if (tab === 'texts') {
+    enableTextEditing();
+    return; // no panel
+  }
+  const panel = document.getElementById('admin-panel');
+  panel.classList.add('open');
+
+  document.getElementById('panel-sections').classList.add('hidden');
+  document.getElementById('panel-order').classList.add('hidden');
+  document.getElementById('panel-cards').classList.add('hidden');
+  document.getElementById('panel-design').classList.add('hidden');
+
+  if (tab === 'sections') document.getElementById('panel-sections').classList.remove('hidden');
+  else if (tab === 'order') document.getElementById('panel-order').classList.remove('hidden');
+  else if (tab === 'cards') { document.getElementById('panel-cards').classList.remove('hidden'); setCardsSubTab('practice'); }
+  else if (tab === 'design') document.getElementById('panel-design').classList.remove('hidden');
+}
+
+function updateTabStyles(active) {
+  ['texts','sections','order','cards','design'].forEach(t => {
+    const el = document.getElementById(`tab-${t}`);
+    if (!el) return;
+    if (t === active) {
+      el.style.background = 'rgba(201,169,110,0.2)';
+      el.style.color = '#c9a96e';
+    } else {
+      el.style.background = '';
+      el.style.color = '#666';
+    }
+  });
+}
+
+function closeAdminPanel() {
+  const panel = document.getElementById('admin-panel');
+  panel.classList.remove('open');
+}
+
+// ─────────────────────────────────────
+// TEXT EDITING
+// ─────────────────────────────────────
+function enableTextEditing() {
+  document.querySelectorAll('[data-editable]').forEach(el => {
+    el.classList.add('edit-mode');
+    el.contentEditable = 'true';
+  });
+}
+
+function disableTextEditing() {
+  document.querySelectorAll('[data-editable]').forEach(el => {
+    el.classList.remove('edit-mode');
+    el.contentEditable = 'false';
+  });
+}
+
+// ─────────────────────────────────────
+// SECTIONS TOGGLE
+// ─────────────────────────────────────
+const sectionMeta = [
+  { id: 'hero', label: 'Hero — ראשי', locked: true },
+  { id: 'about', label: 'אודות' },
+  { id: 'practice', label: 'תחומי התמחות' },
+  { id: 'whyus', label: 'למה אנחנו' },
+  { id: 'articles', label: 'מאמרים' },
+  { id: 'blog', label: 'בלוג' },
+  { id: 'media', label: 'פרסומים' },
+  { id: 'contact', label: 'צור קשר' },
+];
+
+function buildSectionsToggleList() {
+  const list = document.getElementById('sections-toggle-list');
+  list.innerHTML = sectionMeta.map(s => `
+    <div class="flex items-center justify-between py-2 px-3 rounded-lg" style="background:rgba(255,255,255,0.03);">
+      <div class="flex items-center gap-2">
+        ${s.locked ? '<i data-lucide="lock" class="w-4 h-4" style="color:#666;stroke-width:1.5;"></i>' : ''}
+        <span class="text-[14px] text-white">${s.label}</span>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" ${s.locked ? 'disabled' : ''} checked id="toggle-${s.id}" onchange="toggleSection('${s.id}', this.checked)" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>`).join('');
+  lucide.createIcons();
+}
+
+function toggleSection(id, visible) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = visible ? '' : 'none';
+}
+
+// ─────────────────────────────────────
+// SECTION ORDER (drag & drop)
+// ─────────────────────────────────────
+function buildOrderList() {
+  const list = document.getElementById('order-list');
+  const draggable = sectionMeta.filter(s => !s.locked);
+  list.innerHTML = `
+    <div class="flex items-center justify-between py-2 px-3 rounded-lg mb-1" style="background:rgba(255,255,255,0.03);">
+      <div class="flex items-center gap-2">
+        <i data-lucide="lock" class="w-4 h-4" style="color:#444;stroke-width:1.5;"></i>
+        <span class="text-[14px]" style="color:#555;">Hero — נעול ראשון</span>
+      </div>
+    </div>
+    ${draggable.map(s => `
+      <div class="drag-item flex items-center justify-between py-2 px-3 rounded-lg mb-1" style="background:rgba(255,255,255,0.03);" draggable="true" data-section-id="${s.id}"
+           ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dragDrop(event)" ondragleave="dragLeave(event)">
+        <div class="flex items-center gap-2">
+          <i data-lucide="grip-vertical" class="w-4 h-4" style="color:#666;stroke-width:1.5;"></i>
+          <span class="text-[14px] text-white">${s.label}</span>
+        </div>
+      </div>`).join('')}
+    <div class="flex items-center justify-between py-2 px-3 rounded-lg mt-1" style="background:rgba(255,255,255,0.03);">
+      <div class="flex items-center gap-2">
+        <i data-lucide="lock" class="w-4 h-4" style="color:#444;stroke-width:1.5;"></i>
+        <span class="text-[14px]" style="color:#555;">Footer — נעול אחרון</span>
+      </div>
+    </div>`;
+  lucide.createIcons();
+}
+
+let dragSrc = null;
+function dragStart(e) { dragSrc = e.currentTarget; e.dataTransfer.effectAllowed = 'move'; }
+function dragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function dragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function dragDrop(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragSrc || dragSrc === e.currentTarget) return;
+  const srcId = dragSrc.dataset.sectionId;
+  const tgtId = e.currentTarget.dataset.sectionId;
+  // Reorder in DOM
+  const main = document.querySelector('body');
+  const srcEl = document.getElementById(srcId);
+  const tgtEl = document.getElementById(tgtId);
+  if (srcEl && tgtEl) {
+    const parent = srcEl.parentNode;
+    const srcNext = srcEl.nextSibling;
+    parent.insertBefore(srcEl, tgtEl);
+    if (srcNext) parent.insertBefore(tgtEl, srcNext); else parent.appendChild(tgtEl);
+  }
+  // Update list UI
+  const list = document.getElementById('order-list');
+  if (dragSrc && e.currentTarget.parentNode === dragSrc.parentNode) {
+    dragSrc.parentNode.insertBefore(dragSrc, e.currentTarget);
+  }
+}
+
+// ─────────────────────────────────────
+// CARDS MANAGEMENT
+// ─────────────────────────────────────
+function setCardsSubTab(tab) {
+  currentCardsSubTab = tab;
+  ['practice','whyus','media'].forEach(t => {
+    const el = document.getElementById(`cards-tab-${t}`);
+    if (!el) return;
+    if (t === tab) { el.style.background = 'rgba(201,169,110,0.2)'; el.style.color = '#c9a96e'; }
+    else { el.style.background = 'rgba(255,255,255,0.05)'; el.style.color = '#666'; }
+  });
+  renderCardsPanel();
+}
+
+function renderCardsPanel() {
+  const content = document.getElementById('cards-content');
+  if (currentCardsSubTab === 'practice') {
+    content.innerHTML = practiceCards.map((c, i) => `
+      <div class="flex items-center justify-between py-3 px-3 rounded-lg mb-2" style="background:rgba(255,255,255,0.03);" id="pc-row-${i}">
+        <div class="flex items-center gap-3">
+          <i data-lucide="${c.icon}" class="w-5 h-5" style="color:#c9a96e;stroke-width:1.5;"></i>
+          <span class="text-[14px] text-white">${c.title}</span>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="editPracticeCard(${i})" class="text-[12px] px-3 py-1 rounded-lg border border-white/20 text-white hover:bg-white/10 transition-all">עריכה</button>
+          <button onclick="deletePracticeCard(${i})" class="text-[12px] px-3 py-1 rounded-lg border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-all">מחיקה</button>
+        </div>
+      </div>
+      <div id="pc-form-${i}" class="hidden mb-3 p-4 rounded-xl" style="background:#111;">
+        ${practiceCardForm(i)}
+      </div>`).join('') +
+      (practiceCards.length < 6 ? `<button onclick="addPracticeCard()" class="mt-2 text-[13px] px-4 py-2 rounded-lg border border-accent text-accent hover:bg-accent hover:text-[#111] transition-all">+ הוסף תחום</button>` :
+        `<p class="text-[12px] mt-2" style="color:#666;">הגעת למקסימום 6 כרטיסים</p>`);
+    lucide.createIcons();
+  } else if (currentCardsSubTab === 'whyus') {
+    content.innerHTML = whyusCards.map((c, i) => `
+      <div class="flex items-center justify-between py-3 px-3 rounded-lg mb-2" style="background:rgba(255,255,255,0.03);">
+        <div class="flex items-center gap-3">
+          <i data-lucide="${c.icon}" class="w-5 h-5" style="color:#c9a96e;stroke-width:1.5;"></i>
+          <span class="text-[14px] text-white">${c.title}</span>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="editWhyUsCard(${i})" class="text-[12px] px-3 py-1 rounded-lg border border-white/20 text-white hover:bg-white/10 transition-all">עריכה</button>
+          <button onclick="deleteWhyUsCard(${i})" class="text-[12px] px-3 py-1 rounded-lg border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-all">מחיקה</button>
+        </div>
+      </div>
+      <div id="wu-form-${i}" class="hidden mb-3 p-4 rounded-xl" style="background:#111;">
+        ${whyUsCardForm(i)}
+      </div>`).join('') +
+      (whyusCards.length < 3 ? `<button onclick="addWhyUsCard()" class="mt-2 text-[13px] px-4 py-2 rounded-lg border border-accent text-accent hover:bg-accent hover:text-[#111] transition-all">+ הוסף ערך</button>` :
+        `<p class="text-[12px] mt-2" style="color:#666;">מקסימום 3 ערכי ליבה</p>`);
+    lucide.createIcons();
+  } else if (currentCardsSubTab === 'media') {
+    content.innerHTML = `
+      <p class="text-[13px] text-white mb-3">ציטוטי מדיה</p>
+      ${[1,2].map(n => `
+        <div class="mb-4 p-4 rounded-xl" style="background:#111;">
+          <p class="text-[12px] text-accent mb-2">ציטוט ${n}</p>
+          <textarea rows="2" id="media-quote-edit-${n}" class="w-full px-3 py-2 rounded-lg text-white text-[13px] border border-white/10 mb-2 resize-none" style="background:#1a1a1a;direction:rtl;" onchange="updateMediaQuote(${n})">${getEditableText('media-quote-' + n)}</textarea>
+          <input type="text" id="media-source-edit-${n}" placeholder="שם מדיה" class="w-full px-3 py-2 rounded-lg text-white text-[13px] border border-white/10 mb-2" style="background:#1a1a1a;direction:rtl;" value="${getEditableText('media-source-' + n)}" onchange="updateMediaSource(${n})" />
+          <input type="text" id="media-date-edit-${n}" placeholder="תאריך" class="w-full px-3 py-2 rounded-lg text-white text-[13px] border border-white/10" style="background:#1a1a1a;direction:rtl;" value="${getEditableText('media-date-' + n)}" onchange="updateMediaDate(${n})" />
+        </div>`).join('')}
+      <p class="text-[13px] text-white mb-3 mt-4">לוגואות מדיה</p>
+      ${[1,2,3,4,5].map(n => `
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-[12px]" style="color:#666;">לוגו ${n}:</span>
+          <input type="text" class="flex-1 px-3 py-1 rounded-lg text-white text-[13px] border border-white/10" style="background:#1a1a1a;direction:rtl;" value="${getEditableText('media-logo-' + n)}" onchange="updateMediaLogo(${n}, this.value)" />
+        </div>`).join('')}`;
+  }
+}
+
+function getEditableText(key) {
+  const el = document.querySelector(`[data-key="${key}"]`);
+  return el ? el.innerText.replace(/"/g, '&quot;') : '';
+}
+
+function updateMediaQuote(n) {
+  const val = document.getElementById(`media-quote-edit-${n}`).value;
+  const el = document.querySelector(`[data-key="media-quote-${n}"]`);
+  if (el) el.innerText = val;
+}
+function updateMediaSource(n) {
+  const val = document.getElementById(`media-source-edit-${n}`).value;
+  const el = document.querySelector(`[data-key="media-source-${n}"]`);
+  if (el) el.innerText = val;
+}
+function updateMediaDate(n) {
+  const val = document.getElementById(`media-date-edit-${n}`).value;
+  const el = document.querySelector(`[data-key="media-date-${n}"]`);
+  if (el) el.innerText = val;
+}
+function updateMediaLogo(n, val) {
+  const el = document.querySelector(`[data-key="media-logo-${n}"]`);
+  if (el) el.innerText = val;
+}
+
+const ICON_OPTIONS = ['scale','home','users','briefcase','file-text','shield','award','message-square','clock','gavel','building','heart','star','check-circle','globe'];
+
+function practiceCardForm(i) {
+  const c = practiceCards[i] || { icon: 'scale', title: '', desc: '' };
+  return `
+    <div class="mb-3">
+      <p class="text-[12px] text-accent mb-2">בחר אייקון</p>
+      <div class="flex flex-wrap gap-2 mb-3">
+        ${ICON_OPTIONS.map(ic => `
+          <button onclick="selectPracticeIcon(${i},'${ic}')" id="pic-${i}-${ic}" class="w-9 h-9 rounded-lg border flex items-center justify-center transition-all ${c.icon===ic?'border-accent bg-accent/20':'border-white/20 hover:border-white/40'}" style="">
+            <i data-lucide="${ic}" class="w-4 h-4" style="color:#c9a96e;stroke-width:1.5;"></i>
+          </button>`).join('')}
+      </div>
+    </div>
+    <input type="text" id="pc-title-${i}" value="${c.title.replace(/"/g,'&quot;')}" placeholder="כותרת" class="w-full px-3 py-2 rounded-lg text-white text-[14px] border border-white/10 mb-2" style="background:#1a1a1a;direction:rtl;" />
+    <textarea rows="2" id="pc-desc-${i}" placeholder="תיאור" class="w-full px-3 py-2 rounded-lg text-white text-[13px] border border-white/10 mb-3 resize-none" style="background:#1a1a1a;direction:rtl;">${c.desc}</textarea>
+    <div class="flex gap-2">
+      <button onclick="savePracticeCard(${i})" class="text-[13px] px-4 py-1.5 rounded-lg bg-accent text-[#111] font-semibold">שמור</button>
+      <button onclick="cancelPracticeCard(${i})" class="text-[13px] px-4 py-1.5 rounded-lg border border-white/20 text-white">ביטול</button>
+    </div>`;
+}
+
+function whyUsCardForm(i) {
+  const c = whyusCards[i] || { icon: 'award', title: '', body: '' };
+  return `
+    <div class="mb-3">
+      <p class="text-[12px] text-accent mb-2">בחר אייקון</p>
+      <div class="flex flex-wrap gap-2 mb-3">
+        ${ICON_OPTIONS.map(ic => `
+          <button onclick="selectWhyUsIcon(${i},'${ic}')" id="wic-${i}-${ic}" class="w-9 h-9 rounded-lg border flex items-center justify-center transition-all ${c.icon===ic?'border-accent bg-accent/20':'border-white/20 hover:border-white/40'}" style="">
+            <i data-lucide="${ic}" class="w-4 h-4" style="color:#c9a96e;stroke-width:1.5;"></i>
+          </button>`).join('')}
+      </div>
+    </div>
+    <input type="text" id="wu-title-${i}" value="${c.title.replace(/"/g,'&quot;')}" placeholder="כותרת" class="w-full px-3 py-2 rounded-lg text-white text-[14px] border border-white/10 mb-2" style="background:#1a1a1a;direction:rtl;" />
+    <textarea rows="3" id="wu-body-${i}" placeholder="תוכן" class="w-full px-3 py-2 rounded-lg text-white text-[13px] border border-white/10 mb-3 resize-none" style="background:#1a1a1a;direction:rtl;">${c.body}</textarea>
+    <div class="flex gap-2">
+      <button onclick="saveWhyUsCard(${i})" class="text-[13px] px-4 py-1.5 rounded-lg bg-accent text-[#111] font-semibold">שמור</button>
+      <button onclick="cancelWhyUsCard(${i})" class="text-[13px] px-4 py-1.5 rounded-lg border border-white/20 text-white">ביטול</button>
+    </div>`;
+}
+
+function editPracticeCard(i) {
+  document.getElementById(`pc-form-${i}`).classList.remove('hidden');
+  lucide.createIcons();
+}
+function cancelPracticeCard(i) { document.getElementById(`pc-form-${i}`).classList.add('hidden'); }
+function selectPracticeIcon(i, icon) {
+  practiceCards[i] = practiceCards[i] || {};
+  practiceCards[i].icon = icon;
+  // Update button styles
+  ICON_OPTIONS.forEach(ic => {
+    const btn = document.getElementById(`pic-${i}-${ic}`);
+    if (!btn) return;
+    btn.style.borderColor = ic === icon ? '#c9a96e' : '';
+    btn.style.background = ic === icon ? 'rgba(201,169,110,0.2)' : '';
+  });
+}
+function savePracticeCard(i) {
+  practiceCards[i].title = document.getElementById(`pc-title-${i}`).value;
+  practiceCards[i].desc = document.getElementById(`pc-desc-${i}`).value;
+  renderPracticeCards();
+  renderCardsPanel();
+}
+function deletePracticeCard(i) {
+  if (confirm('האם למחוק את התחום?')) {
+    practiceCards.splice(i, 1);
+    renderPracticeCards();
+    renderCardsPanel();
+  }
+}
+function addPracticeCard() {
+  if (practiceCards.length >= 6) return;
+  practiceCards.push({ icon: 'scale', title: 'תחום חדש', desc: 'תיאור התחום' });
+  renderPracticeCards();
+  renderCardsPanel();
+  setTimeout(() => editPracticeCard(practiceCards.length - 1), 50);
+}
+
+function editWhyUsCard(i) {
+  document.getElementById(`wu-form-${i}`).classList.remove('hidden');
+  lucide.createIcons();
+}
+function cancelWhyUsCard(i) { document.getElementById(`wu-form-${i}`).classList.add('hidden'); }
+function selectWhyUsIcon(i, icon) {
+  whyusCards[i] = whyusCards[i] || {};
+  whyusCards[i].icon = icon;
+  ICON_OPTIONS.forEach(ic => {
+    const btn = document.getElementById(`wic-${i}-${ic}`);
+    if (!btn) return;
+    btn.style.borderColor = ic === icon ? '#c9a96e' : '';
+    btn.style.background = ic === icon ? 'rgba(201,169,110,0.2)' : '';
+  });
+}
+function saveWhyUsCard(i) {
+  whyusCards[i].title = document.getElementById(`wu-title-${i}`).value;
+  whyusCards[i].body = document.getElementById(`wu-body-${i}`).value;
+  renderWhyUsCards();
+  renderCardsPanel();
+}
+function deleteWhyUsCard(i) {
+  if (confirm('האם למחוק ערך זה?')) {
+    whyusCards.splice(i, 1);
+    renderWhyUsCards();
+    renderCardsPanel();
+  }
+}
+function addWhyUsCard() {
+  if (whyusCards.length >= 3) return;
+  whyusCards.push({ icon: 'award', title: 'ערך חדש', body: 'תיאור הערך' });
+  renderWhyUsCards();
+  renderCardsPanel();
+}
+
+// ─────────────────────────────────────
+// DESIGN TAB
+// ─────────────────────────────────────
+function updateAccentColor(color) {
+  document.documentElement.style.setProperty('--accent', color);
+  document.documentElement.style.setProperty('--accent-rgb', hexToRgb(color));
+  document.getElementById('accent-picker').value = color;
+  // Update all inline accent references
+  document.querySelectorAll('[style*="c9a96e"]').forEach(el => {
+    el.style.cssText = el.style.cssText.replace(/#c9a96e/gi, color);
+  });
+}
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
+}
+
+function handleProfileUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    profileBase64 = ev.target.result;
+    // Update preview in design panel
+    const preview = document.getElementById('design-profile-preview');
+    preview.innerHTML = `<img src="${profileBase64}" class="w-full h-full object-cover rounded-lg" />`;
+    // Update profile on page
+    const imgEl = document.getElementById('profile-img-el');
+    const placeholder = document.getElementById('profile-placeholder');
+    if (imgEl) { imgEl.src = profileBase64; imgEl.classList.remove('hidden'); }
+    if (placeholder) placeholder.classList.add('hidden');
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateLogoText(val) {
+  document.querySelectorAll('[data-key="nav-logo"],[data-key="footer-logo"]').forEach(el => { el.innerText = val; });
+}
+
+// ─────────────────────────────────────
+// PUBLISH
+// ─────────────────────────────────────
+async function publishChanges() {
+  const token = localStorage.getItem('caspi_netlify_token');
+  if (!token) { showToast('שגיאה: טוקן לא נמצא', '#ef4444'); return; }
+
+  const btn = document.getElementById('publish-btn');
+  document.getElementById('publish-label').textContent = 'מפרסם...';
+  document.getElementById('publish-spinner').classList.remove('hidden');
+  btn.disabled = true;
+
+  // Collect all editable content
+  const editableData = {};
+  document.querySelectorAll('[data-editable]').forEach(el => {
+    editableData[el.dataset.key] = el.innerText;
+  });
+
+  // Build updated HTML
+  let updatedHtml = document.documentElement.outerHTML;
+
+  // Bake in editable values
+  Object.entries(editableData).forEach(([key, val]) => {
+    // Replace content in data-key elements
+    updatedHtml = updatedHtml.replace(
+      new RegExp(`(data-key="${key}"[^>]*>)[^<]*(<)`, 'g'),
+      `$1${val.replace(/\$/g,'$$$$')}$2`
+    );
+  });
+
+  // Bake in card data
+  updatedHtml = updatedHtml.replace(
+    /let practiceCards = \[[\s\S]*?\];/,
+    `let practiceCards = ${JSON.stringify(practiceCards)};`
+  );
+  updatedHtml = updatedHtml.replace(
+    /let whyusCards = \[[\s\S]*?\];/,
+    `let whyusCards = ${JSON.stringify(whyusCards)};`
+  );
+
+  // Bake in accent color
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+  updatedHtml = updatedHtml.replace(/--accent: #c9a96e/, `--accent: ${accent}`);
+
+  // Bake profile image if changed
+  if (profileBase64) {
+    updatedHtml = updatedHtml.replace(
+      /id="profile-img-el" src="[^"]*"/,
+      `id="profile-img-el" src="${profileBase64}"`
+    );
+  }
+
+  try {
+    // Build ZIP using JSZip or native approach
+    // Since we can't load JSZip inline, use the files API with digest
+    const files = {};
+    files['index.html'] = { content: updatedHtml };
+
+    const response = await fetch(`https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}/deploys`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ files })
+    });
+
+    if (response.ok) {
+      showToast('✓ האתר עודכן בהצלחה — השינויים יופיעו תוך 30 שניות', '#25a244');
+    } else {
+      const err = await response.text();
+      console.error('Netlify deploy error:', err);
+      showToast('שגיאה בפרסום — בדוק חיבור לאינטרנט', '#ef4444');
+    }
+  } catch (err) {
+    console.error('Publish error:', err);
+    showToast('שגיאה בפרסום — בדוק חיבור לאינטרנט', '#ef4444');
+  }
+
+  document.getElementById('publish-label').textContent = 'פרסם שינויים';
+  document.getElementById('publish-spinner').classList.add('hidden');
+  btn.disabled = false;
+}
+
+// ─────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────
+function showToast(msg, bg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = bg || '#1a1a1a';
+  t.classList.remove('hidden');
+  t.style.opacity = '1';
+  setTimeout(() => {
+    t.style.opacity = '0';
+    setTimeout(() => t.classList.add('hidden'), 300);
+  }, 3500);
+}
+
+// Close modals on overlay click
+document.getElementById('admin-modal').addEventListener('click', function(e) { if (e.target === this) closeAdminModal(); });
+document.getElementById('article-modal').addEventListener('click', function(e) { if (e.target === this) closeArticleModal(); });
+document.getElementById('blog-modal').addEventListener('click', function(e) { if (e.target === this) closeBlogModal(); });
+
+// Keyboard: Escape closes modals
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeAdminModal(); closeArticleModal(); closeBlogModal(); }
+});
+</script>
+</body>
+</html>

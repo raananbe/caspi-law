@@ -1,0 +1,31 @@
+backend:
+  name: git-gateway
+  branch: main
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+locale: he
+collections:
+  - name: "blog"
+    label: "בלוג יומי"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "כותרת", name: "title", widget: "string" }
+      - { label: "תאריך", name: "date", widget: "datetime" }
+      - { label: "תוכן", name: "body", widget: "markdown" }
+      - { label: "תקציר", name: "excerpt", widget: "text" }
+      - { label: "פורסם", name: "published", widget: "boolean", default: true }
+  - name: "articles"
+    label: "מאמרים מקצועיים"
+    folder: "_articles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "כותרת", name: "title", widget: "string" }
+      - { label: "תאריך", name: "date", widget: "datetime" }
+      - { label: "קטגוריה", name: "category", widget: "select",
+          options: ["נדל\"ן", "דיני משפחה", "דיני חברות", "ליטיגציה", "כללי"] }
+      - { label: "תקציר", name: "excerpt", widget: "text" }
+      - { label: "תוכן", name: "body", widget: "markdown" }
+      - { label: "פורסם", name: "published", widget: "boolean", default: true }
